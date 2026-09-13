@@ -1,0 +1,28 @@
+name: Deploy iFlow to SAP CPI Tenant
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-to-cpi:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository Code
+        uses: actions/checkout@v4
+
+      - name: Step 1 - Fetch OAuth Bearer Token from BTP
+        id: get_token
+        run: |
+          TOKEN=$(curl -s -X POST "${{ secrets.BTP_TOKEN_URL }}" \
+            -u "${{ secrets.BTP_CLIENT_ID }}:${{ secrets.BTP_CLIENT_SECRET }}" \
+            -d "grant_type=client_credentials" | jq -r '.access_token')
+          echo "ACCESS_TOKEN=$TOKEN" >> $GITHUB_ENV
+
+      - name: Step 2 - Trigger iFlow Runtime Deployment via REST API
+        run: |
+          curl -X POST "${{ secrets.BTP_CPI_API_URL }}/api/v1/DeployIntegrationDesigntimeArtifact?Id='IFlow_Flatten_PO_To_Delivery'&Version='active'" \
+            -H "Authorization: Bearer ${{ env.ACCESS_TOKEN }}" \
+            -H "Content-Type: application/json"
