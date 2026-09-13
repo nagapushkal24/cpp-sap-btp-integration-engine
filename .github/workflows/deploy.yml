@@ -18,8 +18,8 @@ jobs:
         run: |
           RESPONSE=$(curl -s -X POST "${secrets.BTP_TOKEN_URL}" \
             -d "grant_type=client_credentials" \
-            -d "client_id=${{ secrets.BTP_CLIENT_ID }}" \
-            -d "client_secret=${{ secrets.BTP_CLIENT_SECRET }}")
+            -d "client_id=${secrets.BTP_CLIENT_ID}" \
+            -d "client_secret=${secrets.BTP_CLIENT_SECRET}")
           
           TOKEN=$(echo "$RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin).get('access_token', ''))")
           
