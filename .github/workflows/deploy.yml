@@ -16,7 +16,7 @@ jobs:
       - name: Step 1 - Fetch OAuth Bearer Token from BTP
         id: get_token
         run: |
-          RESPONSE=$(curl -s -X POST "${{ secrets.BTP_TOKEN_URL }}" \
+          RESPONSE=$(curl -s -X POST "${secrets.BTP_TOKEN_URL}" \
             -d "grant_type=client_credentials" \
             -d "client_id=${{ secrets.BTP_CLIENT_ID }}" \
             -d "client_secret=${{ secrets.BTP_CLIENT_SECRET }}")
