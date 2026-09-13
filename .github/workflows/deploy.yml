@@ -23,7 +23,7 @@ jobs:
 
       - name: Step 2 - Trigger iFlow Runtime Deployment via REST API
         run: |
-          curl -k -i -X POST "${{ secrets.BTP_CPI_API_URL }}/api/v1/DeployIntegrationDesigntimeArtifact?Id='Inbound_Security_Gateway'" \
+          curl -k -i -X POST "${{ secrets.BTP_CPI_API_URL }}/api/v1/DeployIntegrationDesigntimeArtifact?Id=%27Inbound_Security_Gateway%27&Version=%27active%27" \
             -H "Authorization: Bearer ${{ env.ACCESS_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d "{}"
