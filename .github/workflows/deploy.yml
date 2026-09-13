@@ -20,10 +20,10 @@ jobs:
             -u "${{ secrets.BTP_CLIENT_ID }}:${{ secrets.BTP_CLIENT_SECRET }}" \
             -d "grant_type=client_credentials")
           
-          TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
+          TOKEN=$(echo "$RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin).get('access_token', ''))")
           
-          if [ "$TOKEN" == "null" ] || [ -z "$TOKEN" ]; then
-            echo "Error: Failed to retrieve OAuth token. Response was:"
+          if [ -z "$TOKEN" ] || [ "$TOKEN" == "None" ]; then
+            echo "Error: OAuth Authentication Failed. Full BTP Response:"
             echo "$RESPONSE"
             exit 1
           fi
