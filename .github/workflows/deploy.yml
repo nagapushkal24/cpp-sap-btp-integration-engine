@@ -19,8 +19,8 @@ jobs:
           RESPONSE=$(curl -s -X POST "https://2b66bf74trial.authentication.us10.hana.ondemand.com/oauth/token" \
             -H "Content-Type: application/x-www-form-urlencoded" \
             -d "grant_type=client_credentials" \
-            -d "client_id=sb-c6c0a74f-572b-452d-9a4b-88e0b7890972!b703443|it-rt-2b66bf74trial!b55215" \
-            -d "client_secret=ef921040-aaff-4a36-bc67-a6faff89cba9$VaqyVpb6Br4xbCtdmTrp-wCe9sZL6BhAPt10c58erks=")
+            -d "client_id=sb-2bbd1c29-e4ee-49aa-8ae2-1bc5cf13c8dc!b703443|it!b55215" \
+            -d "client_secret=d0c5591d-1229-4d5d-b6b0-23ead9dcc65a$tSPus5OWEAQDovV3fkAl-Ok4KIQkWzn7Gn4JFdTph9E=")
           
           TOKEN=$(echo "$RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin).get('access_token', ''))")
           
