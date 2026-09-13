@@ -25,5 +25,5 @@ jobs:
         run: |
           curl -k -i -X POST "${{ secrets.BTP_CPI_API_URL }}/api/v1/DeployIntegrationDesigntimeArtifact?Id=%27Inbound_Security_Gateway%27&Version=%27active%27" \
             -H "Authorization: Bearer ${{ env.ACCESS_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d "{}"
+            -H "Accept: application/json" \
+            -H "Content-Length: 0"
