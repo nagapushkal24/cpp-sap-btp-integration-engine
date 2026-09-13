@@ -16,13 +16,22 @@ jobs:
       - name: Step 1 - Fetch OAuth Bearer Token from BTP
         id: get_token
         run: |
-          TOKEN=$(curl -s -X POST "${{ secrets.BTP_TOKEN_URL }}" \
+          RESPONSE=$(curl -s -X POST "${{ secrets.BTP_TOKEN_URL }}" \
             -u "${{ secrets.BTP_CLIENT_ID }}:${{ secrets.BTP_CLIENT_SECRET }}" \
-            -d "grant_type=client_credentials" | jq -r '.access_token')
+            -d "grant_type=client_credentials")
+          
+          TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
+          
+          if [ "$TOKEN" == "null" ] || [ -z "$TOKEN" ]; then
+            echo "Error: Failed to retrieve OAuth token. Response was:"
+            echo "$RESPONSE"
+            exit 1
+          fi
+
           echo "ACCESS_TOKEN=$TOKEN" >> $GITHUB_ENV
 
       - name: Step 2 - Trigger iFlow Runtime Deployment via REST API
         run: |
-          curl -k -i -X POST \
-            '${{ secrets.BTP_CPI_API_URL }}/api/v1/DeployIntegrationDesigntimeArtifact?Id='"'"'Inbound_Security_Gateway'"'"'&Version='"'"'active'"'"'' \
-            -H "Authorization: Bearer ${{ env.ACCESS_TOKEN }}"
+          curl -k -i -X POST "${{ secrets.BTP_CPI_API_URL }}/api/v1/DeployIntegrationDesigntimeArtifact?Id='Inbound_Security_Gateway'&Version='active'" \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            -H "Content-Length: 0"
