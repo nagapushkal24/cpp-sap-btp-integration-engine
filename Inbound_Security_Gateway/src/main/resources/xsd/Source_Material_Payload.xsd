@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="MaterialPayload">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ProjectHeader">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ProjectID" type="xs:string"/>
+							<xs:element name="VesselTag" type="xs:string"/>
+							<xs:element name="ExportDate" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MaterialsList" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="MaterialID" type="xs:string"/>
+							<xs:element name="MaterialType" type="xs:string"/>
+							<xs:element name="Description" type="xs:string"/>
+							<xs:element name="Details">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Thickness_mm" type="xs:decimal"/>
+										<xs:element name="Weight_kg" type="xs:decimal"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Quantity" type="xs:integer"/>
+							<xs:element name="BaseUnit" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
