@@ -1,6 +1,7 @@
 name: Deploy iFlow to SAP CPI Tenant
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
