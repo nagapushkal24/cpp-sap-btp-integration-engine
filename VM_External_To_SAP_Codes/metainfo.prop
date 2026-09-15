@@ -1,0 +1,5 @@
+#Store metainfo properties
+#Tue Sep 15 12:11:21 UTC 2026
+description=Enterprise lookup table for translating legacy system unit and type codes to SAP S/4HANA standards.
+source=
+target=
